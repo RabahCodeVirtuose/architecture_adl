@@ -1,14 +1,12 @@
 <?php
 
-use App\Domain\Entity\Parking;
-
-interface IParkingRepository
+interface IGetAllParkingRepository
 {
 	public function getAllParking() : array;
 
 }
 
-class ParkingsRepository implements IParkingRepository
+class ParkingsRepository implements IGetAllParkingRepository
 {
     public function __construct()
 	{

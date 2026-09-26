@@ -1,21 +1,13 @@
 <?php
 
-namespace App\Domain\Entity;
-
 class Customer
 {
     public function __construct(
-        private readonly string $id,
         private string $email,
         private string $password,
         private string $firstName,
         private string $lastName
     ) {}
-
-    public function getId(): string
-    {
-        return $this->id;
-    }
 
     public function getEmail(): string
     {

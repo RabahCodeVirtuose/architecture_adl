@@ -1,9 +1,5 @@
 <?php
 
-namespace App\Domain\Entity;
-
-use DateTimeImmutable;
-
 class ParkingSession
 {
     public function __construct(

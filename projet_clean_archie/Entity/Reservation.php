@@ -1,10 +1,5 @@
 <?php
 
-namespace App\Domain\Entity;
-
-use DateTimeImmutable;
-use DomainException;
-
 class Reservation
 {
     public function __construct(

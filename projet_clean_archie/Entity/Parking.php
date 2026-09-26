@@ -1,9 +1,5 @@
 <?php
 
-namespace App\Domain\Entity;
-
-use DateTimeImmutable;
-
 class Parking
 {
     public function __construct(
@@ -43,9 +39,14 @@ class Parking
     {
         $durationInSeconds = $end->getTimestamp() - $start->getTimestamp();
         $durationInMinutes = $durationInSeconds / 60;
-        
+
         $blocksOf15Mins = ceil($durationInMinutes / 15);
 
         return max(0, $blocksOf15Mins) * $this->pricePer15Minutes;
+    }
+
+    public function canAccept(int $activeReservationsCount): bool
+    {
+        return $activeReservationsCount < $this->totalSpots;
     }
 }

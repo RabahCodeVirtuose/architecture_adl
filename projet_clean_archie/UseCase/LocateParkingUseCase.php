@@ -1,9 +1,8 @@
-<?php 
-
+<?php
 
 class LocateParkingUseCase
 {
-	private IParkingRepository $repo;
+	private IGetAllParkingRepository $repo;
 
 	public function __construct($repo)
 	{

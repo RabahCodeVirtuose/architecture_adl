@@ -2,9 +2,9 @@
 
 class LocateParkingPresenter
 {
-    private IParkingRepository $repo;
+    private IGetAllParkingRepository $repo;
 
-    public function __construct(IParkingRepository $repo)
+    public function __construct(IGetAllParkingRepository $repo)
     {
         $this->repo = $repo;
     }
