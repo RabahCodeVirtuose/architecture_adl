@@ -18,19 +18,36 @@ class AddReservationUseCase
 
     public function execute(ReserveSpotRequest $request): ReserveSpotResponse
     {
-        $user = $this->user_repo->getCustomerByEmail($request->clientEmail);
-        $parking = $this->parking_repo->getParkingById($request->parkingId);
+        if ($request->start >= $request->end) {
+            return new ReserveSpotResponse(ReserveSpotResponse::INVALID_DATES);
+        }
 
-        $activeReservationsCount = $this->reservation_repo->countActiveReservations(
+        $parking = $this->parking_repo->getParkingById($request->parkingId);
+        if ($parking === null) {
+            return new ReserveSpotResponse(ReserveSpotResponse::PARKING_NOT_FOUND);
+        }
+
+        $user = $this->user_repo->getCustomerByEmail($request->clientEmail);
+        if ($user === null) {
+            return new ReserveSpotResponse(ReserveSpotResponse::CUSTOMER_NOT_FOUND);
+        }
+
+        $overlappingReservations = $this->reservation_repo->findOverlappingByParkingId(
             $parking->getId(),
             $request->start,
             $request->end
         );
+        $maximumSimultaneousReservations = $parking->maximumSimultaneousReservations(
+            $request->start,
+            $request->end,
+            $overlappingReservations
+        );
 
-        if (!$parking->canAccept($activeReservationsCount)) {
-            return new ReserveSpotResponse(false, 0.0);
+        if (!$parking->canAccept($maximumSimultaneousReservations)) {
+            return new ReserveSpotResponse(ReserveSpotResponse::CAPACITY_UNAVAILABLE);
         }
 
+        $price = $parking->calculatePrice($request->start, $request->end);
         $reservationId = uniqid('res_');
         $reservation = new Reservation(
             $reservationId,
@@ -42,8 +59,6 @@ class AddReservationUseCase
 
         $this->reservation_repo->save($reservation);
 
-        $price = $parking->calculatePrice($request->start, $request->end);
-
-        return new ReserveSpotResponse(true, $price);
+        return new ReserveSpotResponse(ReserveSpotResponse::SUCCESS, $price);
     }
 }

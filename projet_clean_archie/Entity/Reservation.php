@@ -41,7 +41,7 @@ class Reservation
 
     public function isActiveAt(DateTimeImmutable $time): bool
     {
-        return $time >= $this->start && $time <= $this->end;
+        return $time >= $this->start && $time < $this->end;
     }
 
     public function overlapsWith(DateTimeImmutable $checkStart, DateTimeImmutable $checkEnd): bool

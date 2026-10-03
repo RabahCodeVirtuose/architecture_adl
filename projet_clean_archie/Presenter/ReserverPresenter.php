@@ -20,10 +20,19 @@ class ReserverPresenter
     {
         $useCase = new AddReservationUseCase($this->user_repo, $this->parking_repo, $this->reservation_repo);
         $result = $useCase->execute($request);
+        $message = match ($result->status) {
+            ReserveSpotResponse::SUCCESS => 'Réservation confirmée !',
+            ReserveSpotResponse::INVALID_DATES => 'La date de fin doit être postérieure à la date de début.',
+            ReserveSpotResponse::PARKING_NOT_FOUND => 'Parking introuvable.',
+            ReserveSpotResponse::CUSTOMER_NOT_FOUND => 'Client introuvable.',
+            ReserveSpotResponse::CAPACITY_UNAVAILABLE => 'Le parking est complet pour cette période.',
+            default => throw new LogicException('Résultat de réservation inconnu.'),
+        };
 
         return new AddReservationViewModel(
             $result->price,
-            $result->success
+            $result->success,
+            $message
         );
     }
 }

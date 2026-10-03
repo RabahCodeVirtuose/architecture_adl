@@ -45,8 +45,46 @@ class Parking
         return max(0, $blocksOf15Mins) * $this->pricePer15Minutes;
     }
 
-    public function canAccept(int $activeReservationsCount): bool
+    /** @param Reservation[] $reservations */
+    public function maximumSimultaneousReservations(
+        DateTimeImmutable $start,
+        DateTimeImmutable $end,
+        array $reservations
+    ): int
     {
-        return $activeReservationsCount < $this->totalSpots;
+        if ($start >= $end) {
+            throw new DomainException('La date de fin doit être postérieure à la date de début.');
+        }
+
+        $events = [];
+        foreach ($reservations as $reservation) {
+            if ($reservation->getParkingId() !== $this->id || !$reservation->overlapsWith($start, $end)) {
+                continue;
+            }
+
+            $occupiedFrom = $reservation->getStart() > $start ? $reservation->getStart() : $start;
+            $occupiedUntil = $reservation->getEnd() < $end ? $reservation->getEnd() : $end;
+            $events[] = ['time' => $occupiedFrom, 'change' => 1];
+            $events[] = ['time' => $occupiedUntil, 'change' => -1];
+        }
+
+        // À heure égale, une fin libère sa place avant un nouveau début.
+        usort($events, static function (array $first, array $second): int {
+            return ($first['time'] <=> $second['time']) ?: ($first['change'] <=> $second['change']);
+        });
+
+        $currentOccupancy = 0;
+        $maximumOccupancy = 0;
+        foreach ($events as $event) {
+            $currentOccupancy += $event['change'];
+            $maximumOccupancy = max($maximumOccupancy, $currentOccupancy);
+        }
+
+        return $maximumOccupancy;
+    }
+
+    public function canAccept(int $maximumSimultaneousReservations): bool
+    {
+        return $maximumSimultaneousReservations < $this->totalSpots;
     }
 }

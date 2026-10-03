@@ -2,23 +2,23 @@
 
 interface IGetParkingByIdRepository
 {
-    public function getParkingById($id) : Parking;
+    public function getParkingById(string $id): ?Parking;
 }
 
 class GetParkingByIdRepository implements IGetParkingByIdRepository
 {
-    public function getParkingById($id): Parking
+    public function __construct(private IGetAllParkingRepository $parkings)
     {
-        $parking = new Parking('park_in_1', 0.05, 0.05, 50, 1.50);
-        return $parking;
     }
-}
 
-class GetParkingByIdRepositoryFull implements IGetParkingByIdRepository
-{
-    public function getParkingById($id): Parking
+    public function getParkingById(string $id): ?Parking
     {
-        $parking = new Parking('park_in_1', 0.05, 0.05, 0, 1.50);
-        return $parking;
+        foreach ($this->parkings->getAllParking() as $parking) {
+            if ($parking->getId() === $id) {
+                return $parking;
+            }
+        }
+
+        return null;
     }
 }

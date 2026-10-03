@@ -17,8 +17,8 @@ require_once __DIR__ . '/DTO/ReserveRequest.php';
 
 // Repository (namespace App\Repository)
 require_once __DIR__ . '/Repository/CustomerIdRepository.php';
-require_once __DIR__ . '/Repository/ParkingIdRepository.php';
 require_once __DIR__ . '/Repository/ParkingsRepository.php';
+require_once __DIR__ . '/Repository/ParkingIdRepository.php';
 require_once __DIR__ . '/Repository/ReservationRepository.php';
 
 // UseCases (namespace App\UseCase)

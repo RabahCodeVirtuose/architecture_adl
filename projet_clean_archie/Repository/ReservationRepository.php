@@ -2,7 +2,8 @@
 
 interface IReservationRepository
 {
-    public function countActiveReservations(string $parkingId, DateTimeImmutable $start, DateTimeImmutable $end): int;
+    /** @return Reservation[] */
+    public function findOverlappingByParkingId(string $parkingId, DateTimeImmutable $start, DateTimeImmutable $end): array;
 
     public function save(Reservation $reservation): void;
 }
@@ -11,17 +12,16 @@ class ReservationRepository implements IReservationRepository
 {
     private array $reservations = [];
 
-    public function countActiveReservations(string $parkingId, DateTimeImmutable $start, DateTimeImmutable $end): int
+    public function findOverlappingByParkingId(string $parkingId, DateTimeImmutable $start, DateTimeImmutable $end): array
     {
-        $count = 0;
+        $overlapping = [];
         foreach ($this->reservations as $reservation) {
-            if ($reservation->getParkingId() === $parkingId) {
-                if ($reservation->overlapsWith($start, $end)) {
-                    $count++;
-                }
+            if ($reservation->getParkingId() === $parkingId && $reservation->overlapsWith($start, $end)) {
+                $overlapping[] = $reservation;
             }
         }
-        return $count;
+
+        return $overlapping;
     }
 
     public function save(Reservation $reservation): void
