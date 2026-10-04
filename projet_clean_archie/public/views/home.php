@@ -11,7 +11,6 @@
 <body>
 <header>
   <h1>Parking partagé</h1>
-  <p>POC CODA · données fictives · fuseau Europe/Paris</p>
 </header>
 
 <main>
@@ -42,10 +41,6 @@
       </label>
       <button type="submit">Chercher / actualiser l’état</button>
     </form>
-
-    <p class="muted">État calculé à <?= echapperHtml($heureCalcul) ?> (heure Europe/Paris). Une actualisation relance la recherche et recalcule les compteurs.</p>
-    <p class="muted">Compteurs de cette session de démonstration uniquement : ils ne représentent pas un parking réel ni un état partagé entre visiteurs.</p>
-    <p class="muted">L’état affiché décrit la situation à l’instant indiqué ; il ne préjuge pas de la disponibilité du créneau choisi. Le use case de réservation vérifiera ce créneau.</p>
 
     <ul class="legend" aria-label="Légende de disponibilité">
       <li><span class="legend-dot available"></span> Disponible</li>
@@ -183,7 +178,6 @@
     </form>
   </section>
 
-  <p class="muted">Le fond OpenStreetMap nécessite Internet. Attribution © OpenStreetMap contributors, données sous licence ODbL. Les tuiles ne sont pas préchargées ni conservées hors ligne.</p>
 </main>
 
 <script id="parking-data" type="application/json"><?= $donneesParkingsJson ?></script>
