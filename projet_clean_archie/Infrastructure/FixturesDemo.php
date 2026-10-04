@@ -22,8 +22,8 @@ final class FixturesDemo
                 ['fromMinute' => 0, 'centsPerQuarterHour' => 200],
                 ['fromMinute' => 60, 'centsPerQuarterHour' => 100],
             ])),
-            new Parking('park_loiret_exterieur', 'Parking sud du Loiret', 'Secteur sud du Loiret', true,
-                47.55, 2.05, 4, HorairesOuverture::toujoursOuvert(), new GrilleTarifaire([
+            new Parking('park_loiret_exterieur', 'Orléans Saint-Marceau', 'Secteur Saint-Marceau, Orléans', true,
+                47.8840, 1.9010, 4, HorairesOuverture::toujoursOuvert(), new GrilleTarifaire([
                 ['fromMinute' => 0, 'centsPerQuarterHour' => 125],
             ])),
         ];
