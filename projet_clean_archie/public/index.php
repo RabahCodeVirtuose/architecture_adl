@@ -55,26 +55,6 @@ if (!isset($_SESSION['parking_poc_data']) || !is_array($_SESSION['parking_poc_da
 }
 $etatSession = &$_SESSION['parking_poc_data'];
 
-// Met à jour l'ancien parking éloigné dans les sessions déjà initialisées.
-if (!isset($_SESSION['parking_poc_parking_saint_marceau_v1'])) {
-    $parkingsDeReference = FixturesDemo::creer()['parkings'];
-    foreach ($etatSession['parkings'] ?? [] as $indice => $parking) {
-        if (!$parking instanceof Parking
-            || $parking->identifiant() !== 'park_loiret_exterieur'
-            || $parking->nom() !== 'Parking sud du Loiret') {
-            continue;
-        }
-
-        foreach ($parkingsDeReference as $parkingDeReference) {
-            if ($parkingDeReference->identifiant() === 'park_loiret_exterieur') {
-                $etatSession['parkings'][$indice] = $parkingDeReference;
-                break;
-            }
-        }
-    }
-    $_SESSION['parking_poc_parking_saint_marceau_v1'] = true;
-}
-
 // Retire seulement les anciennes réservations de démonstration, sans toucher aux réservations soumises.
 $anciensIdentifiantsFixtures = ['demo-active-entry', 'demo-successive-a', 'demo-successive-b'];
 if (!isset($_SESSION['parking_poc_fixture_cleanup_v1'])) {
