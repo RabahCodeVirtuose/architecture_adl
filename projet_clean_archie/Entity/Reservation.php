@@ -10,42 +10,42 @@ class Reservation
         private readonly DateTimeImmutable $end
     ) {
         if ($this->start >= $this->end) {
-            throw new DomainException("La date de fin doit être postérieure à la date de début.");
+            throw new DomainException('La date de fin doit être postérieure à la date de début.');
         }
     }
 
-    public function getId(): string
+    public function identifiant(): string
     {
         return $this->id;
     }
 
-    public function getCustomerId(): string
+    public function identifiantClient(): string
     {
         return $this->customerId;
     }
 
-    public function getParkingId(): string
+    public function identifiantParking(): string
     {
         return $this->parkingId;
     }
 
-    public function getStart(): DateTimeImmutable
+    public function debut(): DateTimeImmutable
     {
         return $this->start;
     }
 
-    public function getEnd(): DateTimeImmutable
+    public function fin(): DateTimeImmutable
     {
         return $this->end;
     }
 
-    public function isActiveAt(DateTimeImmutable $time): bool
+    public function estActiveA(DateTimeImmutable $instant): bool
     {
-        return $time >= $this->start && $time < $this->end;
+        return $instant >= $this->start && $instant < $this->end;
     }
 
-    public function overlapsWith(DateTimeImmutable $checkStart, DateTimeImmutable $checkEnd): bool
+    public function chevauche(DateTimeImmutable $debutVerifie, DateTimeImmutable $finVerifiee): bool
     {
-        return $this->start < $checkEnd && $this->end > $checkStart;
+        return $this->start < $finVerifiee && $this->end > $debutVerifie;
     }
 }

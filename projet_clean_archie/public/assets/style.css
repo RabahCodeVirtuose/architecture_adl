@@ -1,0 +1,37 @@
+:root { color-scheme: light; font-family: system-ui, sans-serif; color: #17212b; background: #f4f7f9; }
+body { margin: 0; }
+header, main { max-width: 1100px; margin: auto; padding: 1.2rem; }
+header { background: #123b55; color: white; max-width: none; }
+header > * { max-width: 1100px; margin-left: auto; margin-right: auto; }
+section { background: white; border: 1px solid #d8e0e5; border-radius: .6rem; padding: 1rem; margin: 1rem 0; }
+form { display: flex; flex-wrap: wrap; align-items: end; gap: .8rem; }
+label { display: grid; gap: .3rem; font-weight: 600; }
+input, select, button { font: inherit; padding: .55rem; border: 1px solid #9aabb6; border-radius: .3rem; }
+button { cursor: pointer; background: #145b82; color: white; border: 0; }
+button.secondary { background: #5a6871; }
+#parking-map { height: 520px; width: 100%; border-radius: .4rem; background: #e8eef2; }
+#map-message { min-height: 1.5rem; color: #8b3c00; }
+.notice { padding: .8rem; border-left: 4px solid #145b82; background: #edf6fb; }
+.success { border-color: #168047; color: #125c35; }
+.error { border-color: #b52b27; color: #84201d; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: .8rem; }
+li { margin: .35rem 0; }
+.legend, .parking-list { list-style: none; padding: 0; }
+.legend { display: flex; flex-wrap: wrap; gap: 1rem; }
+.legend li { display: flex; align-items: center; gap: .4rem; }
+.legend-dot { display: inline-block; width: .9rem; height: .9rem; border-radius: 50%; }
+.parking-card { border: 1px solid #d8e0e5; border-left: .45rem solid #76838b; border-radius: .35rem; padding: .75rem; margin: .75rem 0; }
+.parking-card.status-available { border-left-color: #198754; }
+.parking-card.status-partial { border-left-color: #fd7e14; }
+.parking-card.status-full { border-left-color: #dc3545; }
+.parking-card.status-closed { border-left-color: #6c757d; }
+.parking-popup-content { max-width: 300px; }
+.parking-popup-content p { margin: .25rem 0; }
+.parking-popup-content button { position: sticky; bottom: 0; width: 100%; margin-top: .5rem; }
+.parking-marker-container { background: transparent; border: 0; }
+.parking-marker { display: grid; place-items: center; width: 30px; height: 30px; border: 2px solid white; border-radius: 50%; box-shadow: 0 1px 5px #333; color: white; font-weight: 800; }
+.parking-marker-available, .legend-dot.available { background: #198754; }
+.parking-marker-partial, .legend-dot.partial { background: #fd7e14; }
+.parking-marker-full, .legend-dot.full { background: #dc3545; }
+.parking-marker-closed, .legend-dot.closed { background: #6c757d; }
+small, .muted { color: #52616b; }
